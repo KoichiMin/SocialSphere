@@ -1,18 +1,20 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar/NavBar';
+import styled from 'styled-components';
 
-
-function App() {
+const App = () => {
   return (
-    <BrowserRouter>
-    <div>
+    <BrowserRouter  >
+    <div style={{"background-color": "#F9F9F9"}}>
       <NavBar/>
-      <Switch>
+      <Routes>
         <Route exact path="/" />
-      </Switch>
+      </Routes>
     </div>  
     </BrowserRouter>
   );
 }
+
+
 
 export default App;
