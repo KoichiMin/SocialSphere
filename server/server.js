@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 
 
 const {
-    postMessage
+    postMessage,
+    getAllMessages
 } = require('./UserHandler')
 
 app.use((req, res, next) => {
@@ -16,14 +17,22 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(express.json());
 
+//*********************************************************
+// Endpoints for NewsFeed Posts
+//*********************************************************
+
+// post a message to the NewsFeed
 app.post("/post-message", postMessage )
 
-app.post('/my-route', (req, res) => {
-    const myData = req.body;
-    console.log(myData);
-    res.send('Data received');
+// get all the messages from the database
+app.get("/get-all-messages", getAllMessages)
+
+// app.post('/my-route', (req, res) => {
+//     const myData = req.body;
+//     console.log(myData);
+//     res.send('Data received');
     
-});
+// });
 
 
 app.listen('4000', () =>{

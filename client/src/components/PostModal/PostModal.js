@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 import { useState } from 'react';
 
-const PostModal = () =>{
+const PostModal = ({setLoad, load}) =>{
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("")
     const handleOpen = () => setOpen(true);
@@ -40,6 +40,8 @@ const PostModal = () =>{
         .then((res) => res.json())
         .then((data) =>{
             console.log(data)
+            setLoad(!load)
+            handleClose()
         })
     }    
 
