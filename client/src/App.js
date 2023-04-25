@@ -6,15 +6,26 @@ import HomePage from './pages/HomePage/HomePage';
 const App = () => {
   return (
     <BrowserRouter  >
-    <div style={{"background-color": "#F9F9F9"}}>
+    <Wrapper>
       <NavBar/>
       <Routes>
         <Route exact path="/" element={<HomePage/>}/>
       </Routes>
-    </div>  
+    </Wrapper>  
     </BrowserRouter>
   );
 }
+
+const Wrapper = styled.div`
+  background-color: #F9F9F9;
+  background-size: cover;
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -2;
+`
 
 
 
