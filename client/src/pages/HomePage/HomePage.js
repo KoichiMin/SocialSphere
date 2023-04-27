@@ -9,7 +9,7 @@ const HomePage = () => {
         fetch("http://localhost:4000/get-all-messages")
         .then((res) => res.json())
         .then((data) =>{
-            console.log(data.data)
+            // console.log(data.data)
             setMessages(data.data.reverse())
         })
     },[load])
@@ -30,9 +30,9 @@ const HomePage = () => {
                 <div>
                     <PostModal setLoad={setLoad} load={load}/>
                 </div>
-                {messages.map((message) =>{
+                {messages.map((message, index) =>{
                     return (
-                            <div>
+                            <div key={index}>
                                 {message.data}
                             </div>
                         )
