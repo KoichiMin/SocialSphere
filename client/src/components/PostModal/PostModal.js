@@ -3,16 +3,21 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-
 import { useState } from 'react';
+import styled from 'styled-components';
 
 const PostModal = ({setLoad, load}) =>{
     const [open, setOpen] = useState(false);
-    const [message, setMessage] = useState("")
+    const [message, setMessage] = useState("");
+    const [previewImage, setPreviewImage] = useState("")
+    const [image, setImage] = useState("");
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);  
+    const handleClose = () => {
+        setOpen(false)
+        setPreviewImage("")
+    };  
     
+
     const style = {
         position: 'absolute',
         top: '50%',
@@ -25,26 +30,51 @@ const PostModal = ({setLoad, load}) =>{
         p: 4,
         };
 
-    const handleSubmit = (e) =>{
-        console.log(message)
+    const handleSubmit = async (e) =>{
         e.preventDefault()
-        fetch("http://localhost:4000/post-message",{
+        try { 
+            const formData = new FormData();
+            formData.append('file', image);
+            formData.append('upload_preset', 'SocialSphere');
+            const res = await fetch('https://api.cloudinary.com/v1_1/dsjjjhz8h/image/upload', {
+            method: 'POST',
+            body: formData
+            });
+            const data = await res.json();
+            console.log(data);
+            await fetch("http://localhost:4000/post-message",{
             method:"POST",
             headers:{
                 'Content-type':'application/json',
             },
             body: JSON.stringify({
-                data: message
+                data: message,
+                image: data.secure_url
             })
-        })
-        .then((res) => res.json())
-        .then((data) =>{
-            console.log(data)
-            setLoad(!load)
-            handleClose()
-        })
-    }    
+            })
+            .then((res) => res.json())
+            .then((data) =>{
+                console.log(data)
+                setLoad(!load)
+                handleClose()
+            });
+        }
+        catch(err){
+            console.log(err)
+        }
+    }  
+    
+    const handleChange = (image) =>{
+        const reader = new FileReader()
+        if(image){
+            reader.readAsDataURL(image);
+            reader.onloadend = () => {
+            setPreviewImage(reader.result);
+        }
+    }
+    }   
 
+    
     return(
         <div>
         <Button onClick={handleOpen}>What's on your mind, person?</Button>
@@ -71,11 +101,19 @@ const PostModal = ({setLoad, load}) =>{
                     required
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}/>
+                    <input 
+                        type='file' 
+                        onChange={(e) =>{
+                            setImage(e.target.files[0])
+                            handleChange(e.target.files[0])
+                        }}/>
                     <button type='submit'>Post</button>
                 </form>
-                <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                    Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                </Typography>
+                {previewImage &&
+                <div>
+                    <PrevPhoto alt='preview file' src={previewImage}/>
+                </div>
+                }
                 </Box>
             </Fade>
             </Modal>
@@ -83,5 +121,23 @@ const PostModal = ({setLoad, load}) =>{
     )
 }
 
+const PrevPhoto = styled.img`
+    max-width: 50%;
+    height: auto;
+    
+    
+    `
+
 export default PostModal
 
+
+// console.log(data)
+// const formData = new FormData()
+// formData.append("file", image)
+// formData.append("upload_preset", "ir8wdaqq")
+
+// fetch("https://api.cloudinary.com/v1_1/dsjjjhz8h/image/upload", formData)
+// .then((res) => res.json())
+// .then((data)=>{
+//     console.log(data)
+// })
