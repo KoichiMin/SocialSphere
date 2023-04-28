@@ -35,6 +35,8 @@ const Wrapper = styled.div`
     display:flex;
     background-color: white;
     justify-content: space-between;
+    width: 100vw;
+    height: 5vh;
 `
 
 export default NavBar
