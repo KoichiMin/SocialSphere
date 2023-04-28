@@ -67,11 +67,20 @@ const PostModal = () =>{
         }
     }  
     
-    const handleChange = (image) =>{
+    const handleCheckForHeic = (imagePost) =>{
+        if(imagePost.type !== "image/heic"){
+            setImage(imagePost)
+            handleChange(imagePost)
+
+        }
+    }
+
+    const handleChange = (imageChecked) =>{
         const reader = new FileReader()
-        if(image){
-            reader.readAsDataURL(image);
+        if(imageChecked.type !== "image/heic"){
+            reader.readAsDataURL(imageChecked);
             reader.onloadend = () => {
+            console.log(imageChecked)    
             setPreviewImage(reader.result);
         }
     }
@@ -107,8 +116,7 @@ const PostModal = () =>{
                     <input 
                         type='file' 
                         onChange={(e) =>{
-                            setImage(e.target.files[0])
-                            handleChange(e.target.files[0])
+                            handleCheckForHeic(e.target.files[0])
                         }}/>
                     <button type='submit'>Post</button>
                 </form>
@@ -133,14 +141,3 @@ const PrevPhoto = styled.img`
 
 export default PostModal
 
-
-// console.log(data)
-// const formData = new FormData()
-// formData.append("file", image)
-// formData.append("upload_preset", "ir8wdaqq")
-
-// fetch("https://api.cloudinary.com/v1_1/dsjjjhz8h/image/upload", formData)
-// .then((res) => res.json())
-// .then((data)=>{
-//     console.log(data)
-// })
