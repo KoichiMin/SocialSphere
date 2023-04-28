@@ -5,12 +5,15 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { useContext } from 'react';
+import { stateContext } from '../../Context';
 
-const PostModal = ({setLoad, load}) =>{
+const PostModal = () =>{
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("");
     const [previewImage, setPreviewImage] = useState("")
     const [image, setImage] = useState("");
+    const {load, setLoad} =useContext(stateContext)
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
         setOpen(false)

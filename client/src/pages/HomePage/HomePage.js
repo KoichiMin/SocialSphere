@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import PostModal from "../../components/PostModal/PostModal"
 import styled from "styled-components"
+import { stateContext } from "../../Context"
 
 const HomePage = () => {
-    const [messages, setMessages] = useState([])
-    const [load, setLoad] =useState(true)
+    const [messages, setMessages] = useState([]);
+    const {load, setLoad} =useContext(stateContext);
+
     useEffect(()=>{
         fetch("http://localhost:4000/get-all-messages")
         .then((res) => res.json())
@@ -28,7 +30,7 @@ const HomePage = () => {
             </SideBar>
             <NewsFeed>
                 <div>
-                    <PostModal setLoad={setLoad} load={load}/>
+                    <PostModal/>
                 </div>
                 {messages.map((message, index) =>{
                     return (
