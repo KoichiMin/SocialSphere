@@ -17,14 +17,13 @@ const App = () => {
 }
 
 const Wrapper = styled.div`
-  background-color: #F9F9F9;
+background-color: #F9F9F9;
   background-size: cover;
-	width: 100vw;
-	height: 100vh;
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: -2;
+  width: 100vw;
+  min-height: 100vh;
+  
+  top: 0;
+  left: 0;
 `
 
 

@@ -32,11 +32,17 @@ const HomePage = () => {
                 <div>
                     <PostModal/>
                 </div>
-                {messages.map((message, index) =>{
+                {messages.map((post, index) =>{
                     return (
                             <div key={index}>
-                                {message.data}
+                                <div>
+                                    {post.data} 
+                                </div>
+                                {post.image !== "no image available" &&
+                                <Picture src={post.image} alt="posted message"/>
+                                }
                             </div>
+                            
                         )
                     })}
             </NewsFeed>
@@ -63,7 +69,15 @@ const NewsFeed = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* height: 100vh; */
+    /* overflow-y: scroll; */
     /* margin-left: 35%; */
+    /* overflow-x: hidden; */
+`
+
+const Picture = styled.img`
+    height: 30vh;
+    width: 10vw;
 `
 
 export default HomePage
