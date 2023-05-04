@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:6000",
   "dependencies": {
+    "@auth0/auth0-react": "^2.0.2",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@material-ui/core": "^4.12.4",

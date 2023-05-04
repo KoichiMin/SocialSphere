@@ -2,12 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { StateContextProvider } from './Context';
+import { Auth0Provider } from "@auth0/auth0-react";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <StateContextProvider>
-      <App />
+    <Auth0Provider
+    domain="dev-shnrg26a.us.auth0.com"
+    clientId="HpxACigMim64FC16tIsN4ffH2akaVPIn"
+    authorizationParams={{
+      redirect_uri: window.location.origin
+        }}
+      >
+        <App />
+    </Auth0Provider>
     </StateContextProvider>
   </React.StrictMode>
 );
