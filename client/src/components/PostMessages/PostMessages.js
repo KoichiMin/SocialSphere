@@ -6,7 +6,7 @@ import SingleMessage from "./SingleMessage";
 
 const PostMessages = () => {
     const [messages, setMessages] = useState([]);
-    const {load, setLoad} =useContext(stateContext);
+    const {load} =useContext(stateContext);
     
 
     useEffect(() => {
