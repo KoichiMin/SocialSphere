@@ -7,8 +7,10 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { useContext } from 'react';
 import { stateContext } from '../../Context';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const PostModal = () =>{
+    const  {isAuthenticated} = useAuth0()
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("");
     const [previewImage, setPreviewImage] = useState("")
@@ -88,7 +90,8 @@ const PostModal = () =>{
 
     
     return(
-        <div>
+        isAuthenticated &&
+         <div>
         <Button onClick={handleOpen}>What's on your mind, person?</Button>
         <Modal
             aria-labelledby="transition-modal-title"
@@ -129,6 +132,7 @@ const PostModal = () =>{
             </Fade>
             </Modal>
         </div>
+        
     )
 }
 

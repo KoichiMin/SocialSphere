@@ -2,14 +2,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar/NavBar';
 import styled from 'styled-components';
 import HomePage from './pages/HomePage/HomePage';
-import LoginButton from './components/Auth0/LoginButton';
-import LogoutButton from './components/Auth0/LogoutButton';
+
 const App = () => {
   return (
     <BrowserRouter  >
     <Wrapper>
-      <LoginButton/>
-      <LogoutButton/>
       <NavBar/>
       <Routes>
         <Route exact path="/" element={<HomePage/>}/>
