@@ -7,26 +7,37 @@ import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Person2Icon from '@mui/icons-material/Person2';
 import styled from 'styled-components';
+import LoginButton from '../Auth0/LoginButton';
+import LogoutButton from '../Auth0/LogoutButton';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const NavBar = () =>{
+    const  {isAuthenticated} = useAuth0()
     return(
-        <Wrapper>
-            <div>
-                <FacebookIcon/>
-            </div>
-            <div>
-                <HomeIcon/>
-                <PeopleOutlineIcon/>
-                <Diversity3Icon/>
-            </div>  
-            <div>
-                <button>Find Friends</button>
-                <button><AppsIcon/></button>
-                <button><ChatBubbleIcon/></button>
-                <button><NotificationsIcon/></button>
-                <button><Person2Icon/></button>
 
-            </div>
+        <Wrapper>
+            {isAuthenticated ? 
+            <>
+                <div>
+                    <FacebookIcon/>
+                </div>
+                <div>
+                    <HomeIcon/>
+                    <PeopleOutlineIcon/>
+                    <Diversity3Icon/>
+                </div>  
+                <div>
+                    <button>Find Friends</button>
+                    <button><AppsIcon/></button>
+                    <button><ChatBubbleIcon/></button>
+                    <button><NotificationsIcon/></button>
+                    <button><Person2Icon/></button>
+                    <LogoutButton/>
+                </div>
+            </>
+            :
+            <LoginButton/>
+            }
         </Wrapper>
     )
 }
