@@ -15,17 +15,12 @@ const NavBar = () =>{
     const  {isAuthenticated} = useAuth0()
     return(
 
+        <>
+        {isAuthenticated ? 
         <Wrapper>
-            {isAuthenticated ? 
-            <>
-                <div>
-                    <FacebookIcon/>
-                </div>
-                <div>
-                    <HomeIcon/>
-                    <PeopleOutlineIcon/>
-                    <Diversity3Icon/>
-                </div>  
+                <Logo>
+                    SocialSphere
+                </Logo>
                 <div>
                     <button>Find Friends</button>
                     <button><AppsIcon/></button>
@@ -34,11 +29,13 @@ const NavBar = () =>{
                     <button><Person2Icon/></button>
                     <LogoutButton/>
                 </div>
-            </>
-            :
-            <LoginButton/>
-            }
         </Wrapper>
+            :
+            <Wrapper>
+                <LoginButton/>
+            </Wrapper>
+            }
+        </>
     )
 }
 
@@ -46,8 +43,12 @@ const Wrapper = styled.div`
     display:flex;
     background-color: white;
     justify-content: space-between;
-    width: 100vw;
+    width: 100%;
     height: 5vh;
+`
+
+const Logo = styled.div`
+    
 `
 
 export default NavBar

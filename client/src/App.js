@@ -19,7 +19,7 @@ const App = () => {
 const Wrapper = styled.div`
 background-color: #F9F9F9;
   background-size: cover;
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   
   top: 0;
