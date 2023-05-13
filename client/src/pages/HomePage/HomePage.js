@@ -7,7 +7,7 @@ const HomePage = () => {
 
     return(
         <Content>
-            <SideBar>
+            {/* <SideBar>
                 <ul>
                     <li className="li">Find friends</li>
                     <li className="li">Most Recent</li>
@@ -17,7 +17,7 @@ const HomePage = () => {
                     <li className="li">Memories</li>
                     <li className="li">Saved</li>
                 </ul>
-            </SideBar>
+            </SideBar> */}
             <NewsFeed>
                 <PostModal/>
                 <PostMessages/>
