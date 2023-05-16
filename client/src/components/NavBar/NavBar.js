@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import LoginButton from '../Auth0/LoginButton';
 import LogoutButton from '../Auth0/LogoutButton';
 import { useAuth0 } from "@auth0/auth0-react";
+import { Link } from 'react-router-dom';
 
 const NavBar = () =>{
     const  {isAuthenticated} = useAuth0()
@@ -18,15 +19,17 @@ const NavBar = () =>{
         <>
         {isAuthenticated ? 
         <Wrapper>
-                <Logo>
-                    SocialSphere
-                </Logo>
+                <Link to={'/'}>
+                    <Logo>
+                        SocialSphere
+                    </Logo>
+                </Link>
                 <div>
                     <button>Find Friends</button>
                     <button><AppsIcon/></button>
                     <button><ChatBubbleIcon/></button>
                     <button><NotificationsIcon/></button>
-                    <button><Person2Icon/></button>
+                    <Link to={'/UserProfile'}><button><Person2Icon/></button></Link>
                     <LogoutButton/>
                 </div>
         </Wrapper>
@@ -43,8 +46,14 @@ const Wrapper = styled.div`
     display:flex;
     background-color: white;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
     height: 5vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 `
 
 const Logo = styled.div`

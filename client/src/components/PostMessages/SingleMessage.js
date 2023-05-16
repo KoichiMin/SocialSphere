@@ -31,7 +31,7 @@ const ContentBox = styled.div`
     align-items: center;
     border-radius: 10px;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-
+    margin-top: 20px;
 `
 
 const Underline = styled.div`
