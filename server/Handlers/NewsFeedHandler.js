@@ -1,6 +1,6 @@
 const { MongoClient } = require("mongodb");
 require("dotenv").config();
-const { cloudinary } = require('./cloudinaryConfig/cloudinaryConfig')
+const { cloudinary } = require('../cloudinaryConfig/cloudinaryConfig')
 const { MONGO_URI } = process.env;
 const {v4: uuidv4 } = require('uuid');
 let client;
@@ -14,8 +14,7 @@ const connectToDatabase = async () => {
 };
 
 const postMessage = async (req, res) => {
-    // let codedImage = ''
-    // console.log(req.body)
+
     const message = req.body.data;
     // if(req.body.image){
     //     codedImage = await cloudinary.uploader.upload(req.body.image, {
@@ -49,6 +48,8 @@ const getAllMessages = async (req, res) => {
         res.status(404).json({ status: 404, message: err.message });
 }
 };
+
+
 
 module.exports = {
     postMessage,

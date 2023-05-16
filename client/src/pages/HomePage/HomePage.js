@@ -2,9 +2,40 @@
 import PostModal from "../../components/PostModal/PostModal"
 import styled from "styled-components"
 import PostMessages from "../../components/PostMessages/PostMessages"
+import { useAuth0 } from "@auth0/auth0-react"
+import { useEffect, useState } from "react"
 
 const HomePage = () => {
-
+    const {user, isAuthenticated} = useAuth0();
+    const [allUsersList, setAllUsersList] = useState([])
+    // console.log(user)
+    useEffect(() =>{
+        fetch('http://localhost:4000/get-all-users-email')
+            .then((res) => res.json())
+            .then((data) =>{
+                setAllUsersList(data.data)
+                if(isAuthenticated){
+                    if(allUsersList.indexOf(user.email) < 0){
+                        fetch('http://localhost:4000/post-user-database', {
+                            method: 'POST',
+                            headers:{
+                                'Content-type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                email: user.email,
+                                nickname: user.nickname,
+                                name: user.name
+                            })
+                        }).then((res) => res.json())
+                        .then((data) =>{
+                            console.log(data)
+                        })
+                    } else{
+                        console.log("UserInfo is inside the database")
+                    }
+                }
+            })
+    }, [isAuthenticated])
     return(
         <Content>
             {/* <SideBar>
@@ -28,7 +59,13 @@ const HomePage = () => {
 }
 
 const Content = styled.div`
-    
+    background-color: #F9F9F9;
+    background-size: cover;
+    width: 100%;
+    min-height: 100vh;
+    top: 0;
+    left: 0;
+
 `
 
 
@@ -45,6 +82,7 @@ const NewsFeed = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-top: 4%;
 `
 
 

@@ -6,7 +6,12 @@ const cors = require('cors');
 const {
     postMessage,
     getAllMessages
-} = require('./UserHandler')
+} = require('./Handlers/NewsFeedHandler')
+
+const {
+    getAllUsersEmail,
+    postUserInfo
+} = require('./Handlers/UsersHandler')
 app.use(cors())
 // app.use((req, res, next) => {
 //     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -32,6 +37,25 @@ app.post("/post-message", postMessage )
 
 // get all the messages from the database
 app.get("/get-all-messages", getAllMessages)
+
+//*********************************************************
+// Endpoints for user info 
+//*********************************************************
+
+//  get access to all users emails
+app.get("/get-all-users-email", getAllUsersEmail)
+
+//  get access to a specific user 
+
+
+//  update nickname for user 
+
+
+//  post new user inside database
+app.post("/post-user-database", postUserInfo)
+
+//  
+
 
 // app.post('/my-route', (req, res) => {
 //     const myData = req.body;
