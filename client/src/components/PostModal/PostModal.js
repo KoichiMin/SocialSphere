@@ -15,8 +15,18 @@ const PostModal = () =>{
     const [message, setMessage] = useState("");
     const [previewImage, setPreviewImage] = useState("")
     const [image, setImage] = useState("");
+    const [userNickname, setUserNickname] = useState(null)
     const {load, setLoad} =useContext(stateContext)
-    const handleOpen = () => setOpen(true);
+    const handleOpen = async () => {
+        setOpen(true)
+        await fetch(`http://localhost:4000/get-access-user/${user.email}`)
+        .then((res) => res.json())
+        .then((data)=>{
+            // console.log(data.userData[0].nickname)
+            setUserNickname(data.userData[0].nickname)
+        })
+        
+    };
     const handleClose = () => {
         setOpen(false)
         setPreviewImage("")
@@ -46,7 +56,7 @@ const PostModal = () =>{
             body: formData
             });
             const data = await res.json();
-            console.log(data);
+            // console.log(userNickname);
             await fetch("http://localhost:4000/post-message",{
             method:"POST",
             headers:{
@@ -55,12 +65,12 @@ const PostModal = () =>{
             body: JSON.stringify({
                 data: message,
                 image: data.secure_url,
-                user: user.email
+                user: userNickname
             })
             })
             .then((res) => res.json())
             .then((data) =>{
-                console.log(data)
+                // console.log(data)
                 setLoad(!load)
                 handleClose()
             });
@@ -83,7 +93,7 @@ const PostModal = () =>{
         if(imageChecked.type !== "image/heic"){
             reader.readAsDataURL(imageChecked);
             reader.onloadend = () => {
-            console.log(imageChecked)    
+            // console.log(imageChecked)    
             setPreviewImage(reader.result);
         }
     }

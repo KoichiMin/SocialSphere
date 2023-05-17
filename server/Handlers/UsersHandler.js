@@ -23,7 +23,7 @@ const getAllUsersEmail = async (req, res) =>{
 
         // console.log(UsersInfoInDatabase[0])
         for(let i = 0; i < UsersInfoInDatabase.length; i++){
-            usersEmailArray.push(UsersInfoInDatabase[i].UserInfo.email)
+            usersEmailArray.push(UsersInfoInDatabase[i].email)
         }
         res.status(200).json({ status: "success", data: usersEmailArray });
     } catch (err) {
@@ -39,7 +39,9 @@ const postUserInfo = async (req, res) =>{
         const database = db.db("Users");
         await database.collection("UsersInfo").insertOne({
             _id: uniqueId,
-            UserInfo
+            email: UserInfo.email,
+            nickname: UserInfo.nickname,
+            name: UserInfo.name
         });
         res.status(200).json({ status: "success", message: "New user has been added to the database" });
     } catch (err) {
@@ -48,8 +50,23 @@ const postUserInfo = async (req, res) =>{
 
 }
 
+const getInfoSpecificUser = async (req, res) =>{
+    const { user} = req.params;
+    // console.log(user)
+    try {
+    const db = await connectToDatabase();
+    const database = db.db("Users");
+    const UserInfoInDatabase = await database.collection("UsersInfo").find({email: user}).toArray();
+    // console.log(UserInfoInDatabase)
+    res.status(400).json({status: 200, userData: UserInfoInDatabase})
+    } catch (err) {
+        res.status(404).json({ status: 404, message: err.message });
+    }
+}
+
 
 module.exports = {
     getAllUsersEmail,
-    postUserInfo
+    postUserInfo,
+    getInfoSpecificUser
 };

@@ -15,21 +15,23 @@ const connectToDatabase = async () => {
 
 const postMessage = async (req, res) => {
 
-    const message = req.body.data;
+    // const message = req.body.data;
     // if(req.body.image){
     //     codedImage = await cloudinary.uploader.upload(req.body.image, {
     //         upload_preset: 'SocialSphere'
     //         })
     // }
-    // console.log(data);
+    // console.log(req.body);
     try {
+
         const uniqueId = uuidv4();
         const db = await connectToDatabase();
         const database = db.db("NewsFeed");
         await database.collection("SpherePost").insertOne({
             _id: uniqueId,
             image: req.body.image || 'no image available',
-            data: message
+            data: req.body.data,
+            nickname: req.body.user
             
         });
         res.status(200).json({ status: "success", message: "post has been added to NewsFeed" });

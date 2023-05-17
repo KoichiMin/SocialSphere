@@ -6,6 +6,9 @@ const SingleMessage = ({post, index}) =>{
     return(
         <ContentBox key={index}>
             <div>
+                {post.nickname}
+            </div>
+            <div>
                 {post.data} 
             </div>
             {post.image !== "no image available" &&

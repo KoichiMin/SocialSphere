@@ -10,7 +10,8 @@ const {
 
 const {
     getAllUsersEmail,
-    postUserInfo
+    postUserInfo, 
+    getInfoSpecificUser
 } = require('./Handlers/UsersHandler')
 app.use(cors())
 // app.use((req, res, next) => {
@@ -46,7 +47,7 @@ app.get("/get-all-messages", getAllMessages)
 app.get("/get-all-users-email", getAllUsersEmail)
 
 //  get access to a specific user 
-
+app.get("/get-access-user/:user", getInfoSpecificUser)
 
 //  update nickname for user 
 
