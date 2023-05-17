@@ -3,19 +3,19 @@ import PostModal from "../../components/PostModal/PostModal"
 import styled from "styled-components"
 import PostMessages from "../../components/PostMessages/PostMessages"
 import { useAuth0 } from "@auth0/auth0-react"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
 const HomePage = () => {
     const {user, isAuthenticated} = useAuth0();
-    const [allUsersList, setAllUsersList] = useState([])
+    // const [allUsersList, setAllUsersList] = useState([])
     // console.log(user)
     useEffect(() =>{
         fetch('http://localhost:4000/get-all-users-email')
             .then((res) => res.json())
             .then((data) =>{
-                setAllUsersList(data.data)
+                // setAllUsersList(data.data)
                 if(isAuthenticated){
-                    if(allUsersList.indexOf(user.email) < 0){
+                    if(data.data.indexOf(user.email) < 0){
                         fetch('http://localhost:4000/post-user-database', {
                             method: 'POST',
                             headers:{
@@ -35,7 +35,7 @@ const HomePage = () => {
                     }
                 }
             })
-    }, [isAuthenticated])
+    }, [user, isAuthenticated])
     return(
         <Content>
             {/* <SideBar>
@@ -69,13 +69,13 @@ const Content = styled.div`
 `
 
 
-const SideBar = styled.div`
-    height: 0;
+// const SideBar = styled.div`
+//     height: 0;
 
-    .li{
-        list-style-type:none;
-    }
-`
+//     .li{
+//         list-style-type:none;
+//     }
+// `
 
 const NewsFeed = styled.div`
     display: flex;
