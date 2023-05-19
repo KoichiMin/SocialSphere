@@ -28,7 +28,7 @@ const HomePage = () => {
                             })
                         }).then((res) => res.json())
                         .then((data) =>{
-                            console.log(data)
+                            // console.log(data)
                         })
                     } else{
                         console.log("UserInfo is inside the database")

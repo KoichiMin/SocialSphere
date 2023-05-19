@@ -5,7 +5,9 @@ const cors = require('cors');
 
 const {
     postMessage,
-    getAllMessages
+    getAllMessages,
+    getLike,
+    getRemoveLike
 } = require('./Handlers/NewsFeedHandler')
 
 const {
@@ -38,6 +40,12 @@ app.post("/post-message", postMessage )
 
 // get all the messages from the database
 app.get("/get-all-messages", getAllMessages)
+
+//  like a post 
+app.get("/like-post/:userLiked/:postId", getLike)
+
+//  remove liked post
+app.get("/remove-like/:userRemoveLike/:postId", getRemoveLike)
 
 //*********************************************************
 // Endpoints for user info 
