@@ -17,7 +17,7 @@ const SingleMessage = ({post, index}) =>{
             
             <Underline></Underline>
 
-            <LikeCommentShare/>
+            <LikeCommentShare postId={post._id}/>
         </ContentBox>
     )
 }

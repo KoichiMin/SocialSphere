@@ -18,7 +18,8 @@ const PostModal = () =>{
     const [userNickname, setUserNickname] = useState(null)
     const {load, setLoad} =useContext(stateContext)
     const handleOpen = async () => {
-        setOpen(true)
+        setOpen(true);
+        setMessage("");
         await fetch(`http://localhost:4000/get-access-user/${user.email}`)
         .then((res) => res.json())
         .then((data)=>{
@@ -65,7 +66,8 @@ const PostModal = () =>{
             body: JSON.stringify({
                 data: message,
                 image: data.secure_url,
-                user: userNickname
+                user: userNickname,
+                email: user.email
             })
             })
             .then((res) => res.json())
