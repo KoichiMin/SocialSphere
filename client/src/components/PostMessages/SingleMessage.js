@@ -1,10 +1,9 @@
 import styled from "styled-components"
-
 import LikeCommentShare from "./LikeCommentShare";
 
-const SingleMessage = ({post, index}) =>{
+const SingleMessage = ({post}) =>{
     return(
-        <ContentBox key={index}>
+        <ContentBox>
             <div>
                 {post.nickname}
             </div>
@@ -47,7 +46,7 @@ const Underline = styled.div`
 
 
 const Picture = styled.img`
-height: 640px;
+height: 500px;
 width: 642px;
 
 `

@@ -15,13 +15,6 @@ const connectToDatabase = async () => {
 
 const postMessage = async (req, res) => {
 
-    // const message = req.body.data;
-    // if(req.body.image){
-    //     codedImage = await cloudinary.uploader.upload(req.body.image, {
-    //         upload_preset: 'SocialSphere'
-    //         })
-    // }
-    // console.log(req.body);
     try {
 
         const uniqueId = uuidv4();
@@ -54,6 +47,21 @@ const getAllMessages = async (req, res) => {
         res.status(404).json({ status: 404, message: err.message });
 }
 };
+
+const getSpecificPost = async (req, res) =>{
+    const {postId} = req.params
+    try{
+        const db = await connectToDatabase();
+        const database = db.db("NewsFeed");
+        // get access to the post through the postId
+        const PostedMessageInfoInDatabase = await database.collection("SpherePost").find({_id: postId}).toArray();
+        res.status(200).json({ status: "success", data: PostedMessageInfoInDatabase });
+    }
+    catch(err){
+        res.status(404).json({ status: 404, message: err.message });
+    }
+}
+
 
 // get the user and postId, then you can update the post message object
 const getLike = async (req, res) =>{
@@ -106,6 +114,7 @@ const getRemoveLike = async (req, res) =>{
 module.exports = {
     postMessage,
     getAllMessages,
+    getSpecificPost,
     getLike,
     getRemoveLike
 };

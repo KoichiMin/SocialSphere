@@ -6,6 +6,7 @@ const cors = require('cors');
 const {
     postMessage,
     getAllMessages,
+    getSpecificPost,
     getLike,
     getRemoveLike
 } = require('./Handlers/NewsFeedHandler')
@@ -40,6 +41,9 @@ app.post("/post-message", postMessage )
 
 // get all the messages from the database
 app.get("/get-all-messages", getAllMessages)
+
+//  get a specific post in database
+app.get("/get-specific-post/:postId", getSpecificPost)
 
 //  like a post 
 app.get("/like-post/:userLiked/:postId", getLike)

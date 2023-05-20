@@ -31,12 +31,19 @@ const Like = ({postId}) =>{
     return(
         <div className='icons'>
             { changeLike ?
-                <Button className='icon-button' onClick={handleChange}><ThumbUpOffAltIcon/></Button>
+                <Button className='icon-button' onClick={handleChange}>
+                    <ThumbUpOffAltIcon/>
+                    <div>Like</div>
+                </Button>
+                
                 :
-                <Button className='icon-button' onClick={handleChange}><ThumbUpAltIcon/></Button>    
+                <Button className='icon-button' onClick={handleChange}>
+                <ThumbUpAltIcon/>
+                <div>Like</div>
+                </Button>    
             }
 
-            <div>Like</div>
+            
         </div>
     )
 }
@@ -44,7 +51,14 @@ const Like = ({postId}) =>{
 const Button = styled.button`
         border: none;
         background-color: white;
-        
+        display: flex;
+        align-items: center;
+        :hover{
+            
+            background-color: hsl(0, 0%, 95%); 
+            opacity: 1;
+
+        }
     
 `
 
