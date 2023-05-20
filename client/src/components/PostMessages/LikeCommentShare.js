@@ -3,13 +3,13 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import styled from 'styled-components';
 // import { useState } from 'react';
 import Like from './Like';
-import Comments from './ModalComments';
+import ModalComments from './ModalComments';
 const LikeCommentShare = ({postId}) =>{
 
     return(
         <BottomOptions>
             <Like postId ={postId}/>
-            <Comments/>
+            <ModalComments postId ={postId}/>
             <div className='icons'>
                 <button className='icon-button'><IosShareIcon/></button>
                 <div>Share</div>
@@ -41,6 +41,11 @@ const BottomOptions = styled.div`
             }
         }
     }
+/* 
+    .modal-content{
+        position: relative;
+        z-index: 9999;
+    } */
 
     .icon-button{
         border: none;

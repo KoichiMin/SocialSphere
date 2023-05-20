@@ -22,7 +22,7 @@ const PostMessages = () => {
     <div>
         { messages.map((post, index) => {
         return (
-            <SingleMessage post={post} index={index}/>
+            <SingleMessage post={post} />
         )
         })}
     </div>
