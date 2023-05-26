@@ -8,7 +8,9 @@ const {
     getAllMessages,
     getSpecificPost,
     getLike,
-    getRemoveLike
+    getRemoveLike,
+    postComment,
+    getAllCommentsInPost
 } = require('./Handlers/NewsFeedHandler')
 
 const {
@@ -50,6 +52,12 @@ app.get("/like-post/:userLiked/:postId", getLike)
 
 //  remove liked post
 app.get("/remove-like/:userRemoveLike/:postId", getRemoveLike)
+
+// post a comment 
+app.post("/comment-post/:userCommented/:postId", postComment)
+
+//  get all comments in a post
+app.get("/get-all-comments-in-post/:postId", getAllCommentsInPost)
 
 //*********************************************************
 // Endpoints for user info 

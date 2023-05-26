@@ -28,7 +28,7 @@ const postMessage = async (req, res) => {
             email: req.body.email,
             numLikes : 0,
             LikedBy: [],
-
+            Comments:[]
             
         });
         res.status(200).json({ status: "success", message: "post has been added to NewsFeed" });
@@ -110,11 +110,49 @@ const getRemoveLike = async (req, res) =>{
     }
 }
 
+// get the user and postId, then add comment by the user to the Comments array inside the SpherePost NewsFeed post  
+const postComment = async (req, res) =>{
+    const { userCommented, postId} = req.params
+    const {message} = req.body
+    // console.log(userCommented, message)
+    try{
+        const db = await connectToDatabase();
+        const database = db.db("NewsFeed");
+        // get access to the post through the postId
+        const PostedMessageInfoInDatabase = await database.collection("SpherePost").find({_id: postId}).toArray();
+        //  get access to the user 
+        const UserInfoInDatabase = await db.db("Users").collection("UsersInfo").find({email: userCommented}).toArray();
+        
+        let changeCommentsArray = PostedMessageInfoInDatabase[0].Comments 
+        userId = UserInfoInDatabase[0].nickname
+        changeCommentsArray.push([userId, message])
+        //  update the value for Comments
+        await database.collection("SpherePost").updateOne({_id: postId}, {$set:{Comments: changeCommentsArray}})
+        res.status(400).json({status: 200, message: "comment has been posted", userId: userId})
+
+    } catch(err) {
+        res.status(404).json({ status: 404, message: err.message });
+    }
+}
+
+const getAllCommentsInPost = async (req, res) =>{
+    const {postId} = req.params
+    try {
+        const db = await connectToDatabase();
+        const database = db.db("NewsFeed");
+        const messages = await database.collection("SpherePost").find({_id: postId}).toArray();
+        res.status(200).json({ status: "success", data: messages });
+    } catch (err) {
+        res.status(404).json({ status: 404, message: err.message });
+}
+}
 
 module.exports = {
     postMessage,
     getAllMessages,
     getSpecificPost,
     getLike,
-    getRemoveLike
+    getRemoveLike,
+    postComment,
+    getAllCommentsInPost
 };

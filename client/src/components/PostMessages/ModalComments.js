@@ -69,7 +69,7 @@ const ModalComments = ({postId}) =>{
             >
                 <Fade in={open}>
                     <Box sx={style}>
-                        <ContentComment postId={postId}/>
+                        <ContentComment postId={postId} setOpen={setOpen}/>
                     </Box>
                 </Fade>
             </Modal>
