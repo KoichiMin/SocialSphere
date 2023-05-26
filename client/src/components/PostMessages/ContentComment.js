@@ -27,9 +27,9 @@ const ContentComment = ({postId}) =>{
         .then((res) => res.json())
         .then((data) =>{
             setPostContent(data.data[0])
-            console.log(data.data[0])
+            // console.log(data.data[0])
         })
-    }, [])    
+    }, [postId])    
 
     return(
         postContent &&
