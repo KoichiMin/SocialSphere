@@ -1,5 +1,5 @@
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import { useState } from 'react';
+import { useState} from 'react';
 import { Modal } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -8,9 +8,32 @@ import ContentComment from './ContentComment';
 
 const ModalComments = ({postId}) =>{
     const [open, setOpen] = useState(false); 
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);  
+
+    //  used the localStorage to check if modal is open or not because the comment button will call this component again
+    const handleOpen = () => {
+        const modalState = localStorage.getItem('modalOpen');
+        if(modalState !== null){
+            // console.log(modalState)
+            if(modalState === 'false'){
+                setOpen(true)
+                localStorage.setItem('modalOpen', true);
+            }
+        } else{
+            setOpen(true)
+            localStorage.setItem('modalOpen', true);
+        }
+    };
+    const handleClose = () =>{
+        // const modalState = localStorage.getItem('modalOpen');
+        // console.log(modalState)
+        localStorage.setItem('modalOpen', false);
+        setOpen(false);
+        
+        
+    }  
     
+
+
     const style = {
         position: 'absolute',
         top: '50%',
@@ -28,7 +51,7 @@ const ModalComments = ({postId}) =>{
         
         <div className='icons modal-content'>
             <button onClick={handleOpen} className='icon-button comment-button' > 
-                <button className='icon-button'><ChatBubbleOutlineIcon/></button>
+                <ChatBubbleOutlineIcon/>
                 <div>Comment</div>
             </button>
             <Modal
@@ -46,7 +69,7 @@ const ModalComments = ({postId}) =>{
             >
                 <Fade in={open}>
                     <Box sx={style}>
-                        <ContentComment postId={postId}/>
+                        <ContentComment postId={postId} setOpen={setOpen}/>
                     </Box>
                 </Fade>
             </Modal>
