@@ -7,6 +7,7 @@ const {
     postMessage,
     getAllMessages,
     getSpecificPost,
+    getStatusLiked,
     getLike,
     getRemoveLike,
     postComment,
@@ -46,6 +47,9 @@ app.get("/get-all-messages", getAllMessages)
 
 //  get a specific post in database
 app.get("/get-specific-post/:postId", getSpecificPost)
+
+//  get status if user liked post 
+app.get("/get-status/:userLiked/:postId", getStatusLiked)
 
 //  like a post 
 app.get("/like-post/:userLiked/:postId", getLike)

@@ -27,7 +27,8 @@ const postMessage = async (req, res) => {
             nickname: req.body.user,
             email: req.body.email,
             numLikes : 0,
-            LikedBy: [],
+            UserLikedBy: [],
+            EmailLikedBy: [],
             Comments:[]
             
         });
@@ -63,6 +64,28 @@ const getSpecificPost = async (req, res) =>{
 }
 
 
+const getStatusLiked = async (req, res) =>{
+    const {userLiked, postId} = req.params
+    try{
+        const db = await connectToDatabase();
+        const database = db.db("NewsFeed");
+        // get access to the post through the postId
+        const PostedMessageInfoInDatabase = await database.collection("SpherePost").find({_id: postId}).toArray();
+        // console.log(PostedMessageInfoInDatabase);
+        // console.log(PostedMessageInfoInDatabase[0].EmailLikedBy.indexOf(userLiked))
+        if(PostedMessageInfoInDatabase[0].EmailLikedBy.indexOf(userLiked) >= 0){
+            res.status(200).json({status:"success", message: "user liked picture", Liked: true})
+        } else{
+            res.status(200).json({status:"success", message: "user didn't like the picture", Liked: false})
+        }
+
+
+    } catch(err) {
+        res.status(404).json({ status: 404, message: err.message });
+    }
+}
+
+
 // get the user and postId, then you can update the post message object
 const getLike = async (req, res) =>{
     const { userLiked, postId} = req.params
@@ -74,12 +97,14 @@ const getLike = async (req, res) =>{
         const PostedMessageInfoInDatabase = await database.collection("SpherePost").find({_id: postId}).toArray();
         //  get access to the user 
         const UserInfoInDatabase = await db.db("Users").collection("UsersInfo").find({email: userLiked}).toArray();
-
-        let changeUserLikedBy = PostedMessageInfoInDatabase[0].LikedBy 
+        let changeEmailLikedBy = PostedMessageInfoInDatabase[0].EmailLikedBy 
+        let changeUserLikedBy = PostedMessageInfoInDatabase[0].UserLikedBy 
         userId = UserInfoInDatabase[0].nickname
+        userEmail = UserInfoInDatabase[0].email
         changeUserLikedBy.push(userId)
-        //  update the values for numLikes and LikedBy 
-        await database.collection("SpherePost").updateOne({_id: postId}, {$set:{numLikes:PostedMessageInfoInDatabase[0].numLikes += 1, LikedBy: changeUserLikedBy}})
+        changeEmailLikedBy.push(userEmail)
+        //  update the values for numLikes, UserLikedBy and EmailLikedBy
+        await database.collection("SpherePost").updateOne({_id: postId}, {$set:{numLikes:PostedMessageInfoInDatabase[0].numLikes += 1, UserLikedBy: changeUserLikedBy, EmailLikedBy: changeEmailLikedBy}})
         res.status(400).json({status: 200, message: "liked worked", userId: userId})
 
     } catch(err) {
@@ -97,12 +122,16 @@ const getRemoveLike = async (req, res) =>{
         const PostedMessageInfoInDatabase = await database.collection("SpherePost").find({_id: postId}).toArray();
         //  get access to the user 
         const UserInfoInDatabase = await db.db("Users").collection("UsersInfo").find({email: userRemoveLike}).toArray();
+        let changeEmailLikedBy = PostedMessageInfoInDatabase[0].EmailLikedBy 
+        let changeUserLikedBy = PostedMessageInfoInDatabase[0].UserLikedBy
 
-        let changeUserLikedBy = PostedMessageInfoInDatabase[0].LikedBy
         userId = UserInfoInDatabase[0].nickname
+        userEmail = UserInfoInDatabase[0].email
+
         changeUserLikedBy.splice(userId, 1)
-        //  update the values for numLikes and LikedBy 
-        await database.collection("SpherePost").updateOne({_id: postId}, {$set:{numLikes:PostedMessageInfoInDatabase[0].numLikes -= 1, LikedBy: changeUserLikedBy}})
+        changeEmailLikedBy.splice(userEmail, 1)
+        //  update the values for numLikes, UserLikedBy and EmailLikedBy
+        await database.collection("SpherePost").updateOne({_id: postId}, {$set:{numLikes:PostedMessageInfoInDatabase[0].numLikes -= 1, UserLikedBy: changeUserLikedBy, EmailLikedBy: changeEmailLikedBy}})
         res.status(400).json({status: 200, message: "liked removed", userId: userId})
 
     } catch(err) {
@@ -151,6 +180,7 @@ module.exports = {
     postMessage,
     getAllMessages,
     getSpecificPost,
+    getStatusLiked,
     getLike,
     getRemoveLike,
     postComment,
