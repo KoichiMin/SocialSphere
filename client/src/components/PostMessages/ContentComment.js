@@ -3,11 +3,15 @@ import { useState } from 'react';
 import SingleMessage from './SingleMessage';
 import { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import CommentMessages from './CommentMessages';
+import styled from 'styled-components';
 
 const ContentComment = ({postId, setOpen}) =>{
     const [message, setMessage] = useState("");
     const [postContent, setPostContent] = useState(null)
     const {user} = useAuth0()
+
+    //  submit comment written by the user
     const handleSubmit = (e) =>{
         // console.log(user)
         e.preventDefault()
@@ -27,6 +31,7 @@ const ContentComment = ({postId, setOpen}) =>{
             setOpen(false)
         })
     }
+    // get access to the Sphere Post through the postId
     useEffect(()=>{
         fetch(`http://localhost:4000/get-specific-post/${postId}`)
         .then((res) => res.json())
@@ -38,8 +43,9 @@ const ContentComment = ({postId, setOpen}) =>{
 
     return(
         postContent &&
-    <>
+    <ContentCommentBox>
         <SingleMessage post={postContent}/>
+        <CommentMessages post={postContent}/>
         <form onSubmit={(e) =>handleSubmit(e)}>
             <input
                 label="What's on your mind?"
@@ -50,8 +56,15 @@ const ContentComment = ({postId, setOpen}) =>{
             />
             <Button type="submit">Post</Button>
         </form>
-    </>
+    </ContentCommentBox>
     )
 }
+
+const ContentCommentBox = styled.div`
+    height: 800px;
+    /* width: 660px; */
+    overflow-x: hidden;
+    overflow-y: auto;
+`
 
 export default ContentComment
