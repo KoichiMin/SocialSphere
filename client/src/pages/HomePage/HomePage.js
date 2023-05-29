@@ -4,7 +4,7 @@ import styled from "styled-components"
 import PostMessages from "../../components/PostMessages/PostMessages"
 import { useAuth0 } from "@auth0/auth0-react"
 import { useEffect } from "react"
-
+import image from "/Users/a/Desktop/mini project/SocialSphere/client/src/image/R.png"
 const HomePage = () => {
     const {user, isAuthenticated} = useAuth0();
     // const [allUsersList, setAllUsersList] = useState([])
@@ -29,6 +29,18 @@ const HomePage = () => {
                         }).then((res) => res.json())
                         .then((data) =>{
                             // console.log(data)
+                            fetch('http://localhost:4000/post-profile-to-database', {
+                                method: 'POST',
+                                headers:{
+                                    'Content-type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    email: user.email,
+                                    nickname: user.nickname,
+                                    name: user.name,
+                                    ProfilePicture: image
+                                })
+                            }).then((res) => res.json())
                         })
                     } else{
                         console.log("UserInfo is inside the database")
@@ -52,6 +64,7 @@ const HomePage = () => {
             <NewsFeed>
                 <PostModal/>
                 <PostMessages/>
+                {/* <img src={image} alt="Profile"/> */}
             </NewsFeed>
         
         </Content>

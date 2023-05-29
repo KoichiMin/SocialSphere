@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const {
+    postUserProfile
+} = require('./Handlers/UserProfile')
+
+const {
     postMessage,
     getAllMessages,
     getSpecificPost,
@@ -79,7 +83,15 @@ app.get("/get-access-user/:user", getInfoSpecificUser)
 //  post new user inside database
 app.post("/post-user-database", postUserInfo)
 
-//  
+//*********************************************************
+// Endpoints for user Profile
+//*********************************************************
+
+
+// create a user profile for the first time
+app.post("/post-profile-to-database" , postUserProfile)
+
+
 
 
 // app.post('/my-route', (req, res) => {
