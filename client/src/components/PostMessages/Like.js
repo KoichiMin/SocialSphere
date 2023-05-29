@@ -16,7 +16,7 @@ const Like = ({postId}) =>{
             .then((data) => {
                 setChangeLike(data.Liked);
                 setisModalOpen(localStorage.getItem('modalOpen') === 'true')
-                console.log(isModalOpen)
+                // console.log(isModalOpen)
             });
         }
         }, [isAuthenticated, postId, isModalOpen]);

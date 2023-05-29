@@ -64,7 +64,6 @@ const HomePage = () => {
             <NewsFeed>
                 <PostModal/>
                 <PostMessages/>
-                {/* <img src={image} alt="Profile"/> */}
             </NewsFeed>
         
         </Content>

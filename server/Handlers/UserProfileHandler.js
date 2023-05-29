@@ -36,7 +36,23 @@ const postUserProfile = async (req, res) =>{
 }
 
 
+const getUserProfileInfo = async (req, res) =>{
+    const { userEmail} = req.params;
+    // console.log(user)
+    try {
+    const db = await connectToDatabase();
+    const database = db.db("Users");
+    const UserInfoInDatabase = await database.collection("UsersProfile").find({email: userEmail}).toArray();
+    // console.log(UserInfoInDatabase)
+    res.status(400).json({status: 200, userData: UserInfoInDatabase})
+    } catch (err) {
+        res.status(404).json({ status: 404, message: err.message });
+    }
+}
+
+
 
 module.exports = {
-    postUserProfile
+    postUserProfile,
+    getUserProfileInfo
 }

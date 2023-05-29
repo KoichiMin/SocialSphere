@@ -4,8 +4,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const {
-    postUserProfile
-} = require('./Handlers/UserProfile')
+    postUserProfile,
+    getUserProfileInfo
+} = require('./Handlers/UserProfileHandler')
 
 const {
     postMessage,
@@ -91,7 +92,8 @@ app.post("/post-user-database", postUserInfo)
 // create a user profile for the first time
 app.post("/post-profile-to-database" , postUserProfile)
 
-
+//  get user profile info
+app.get("/get-user-profile-info/:userEmail", getUserProfileInfo)
 
 
 // app.post('/my-route', (req, res) => {
