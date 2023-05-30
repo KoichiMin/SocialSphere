@@ -6,6 +6,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import CommentMessages from './CommentMessages';
 import styled from 'styled-components';
 
+
+// content inside the comment modal
 const ContentComment = ({postId, setOpen}) =>{
     const [message, setMessage] = useState("");
     const [postContent, setPostContent] = useState(null)
