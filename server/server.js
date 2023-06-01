@@ -16,7 +16,8 @@ const {
     getLike,
     getRemoveLike,
     postComment,
-    getAllCommentsInPost
+    getAllCommentsInPost,
+    getShare
 } = require('./Handlers/NewsFeedHandler')
 
 const {
@@ -67,6 +68,9 @@ app.post("/comment-post/:userCommented/:postId", postComment)
 
 //  get all comments in a post
 app.get("/get-all-comments-in-post/:postId", getAllCommentsInPost)
+
+// share a post
+app.get("/share-post/:userShared/:postId", getShare)
 
 //*********************************************************
 // Endpoints for user info 
