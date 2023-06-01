@@ -29,8 +29,8 @@ const postMessage = async (req, res) => {
             numLikes : 0,
             UserLikedBy: [],
             EmailLikedBy: [],
-            Comments:[]
-            
+            Comments:[],
+            Shared: []
         });
         res.status(200).json({ status: "success", message: "post has been added to NewsFeed" });
     } catch (err) {
@@ -63,7 +63,7 @@ const getSpecificPost = async (req, res) =>{
     }
 }
 
-
+//  find out if the user liked the SpherePost or not 
 const getStatusLiked = async (req, res) =>{
     const {userLiked, postId} = req.params
     try{
@@ -176,6 +176,38 @@ const getAllCommentsInPost = async (req, res) =>{
 }
 }
 
+// add email of user that wants to share SpherePost
+const getShare = async (req, res) =>{
+    const {userShared, postId} = req.params
+    
+    try {
+        const db = await connectToDatabase();
+        const NewsFeedDatabase = db.db("NewsFeed");
+        const UserDatabase = db.db("Users")
+        // get access to the post through the postId
+        const PostedMessageInfoInDatabase = await NewsFeedDatabase.collection("SpherePost").find({_id: postId}).toArray(); 
+        let changeSharedObject = PostedMessageInfoInDatabase[0].Shared
+         //  get access to the user 
+        const UserInfoInDatabase = await UserDatabase.collection("UsersProfile").find({email: userShared}).toArray();
+        let changedSharedInUserProfile = UserInfoInDatabase[0].shared
+        // check if user already shared the SpherePost
+        if(changeSharedObject.indexOf(userShared) < 0){
+            // add user to the shared array in SpherePost
+            changeSharedObject.push(userShared)
+            // add SpherePost in the user Profile object
+            changedSharedInUserProfile.push(PostedMessageInfoInDatabase[0])
+            //  update the values for Shared
+            await NewsFeedDatabase.collection("SpherePost").updateOne({_id: postId}, {$set:{ Shared: changeSharedObject}})
+            await UserDatabase.collection("UsersProfile").updateOne({email: userShared}, {$set:{shared:changedSharedInUserProfile}})
+            res.status(400).json({status: 200, message: "user is now sharing the SpherePost"})
+        } else{
+            res.status(400).json({status: 200, message: "user is already sharing the SpherePost"})
+        }
+    } catch (err) {
+        res.status(404).json({ status: 404, message: err.message });
+}
+}
+
 module.exports = {
     postMessage,
     getAllMessages,
@@ -184,5 +216,6 @@ module.exports = {
     getLike,
     getRemoveLike,
     postComment,
-    getAllCommentsInPost
+    getAllCommentsInPost,
+    getShare
 };

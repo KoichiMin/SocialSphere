@@ -1,19 +1,17 @@
 // import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import IosShareIcon from '@mui/icons-material/IosShare';
 import styled from 'styled-components';
 // import { useState } from 'react';
 import Like from './Like';
 import ModalComments from './ModalComments';
+import Share from './Share';
+
 const LikeCommentShare = ({postId}) =>{
 
     return(
         <BottomOptions>
             <Like postId ={postId}/>
             <ModalComments postId ={postId}/>
-            <div className='icons'>
-                <button className='icon-button'><IosShareIcon/></button>
-                <div>Share</div>
-            </div>
+            <Share postId ={postId}/>
 
         </BottomOptions>
     )
@@ -31,13 +29,15 @@ const BottomOptions = styled.div`
         align-items: center;
         margin-bottom: 5px;
         width: 35%;
+    
         :hover{
             background-color: hsl(0, 0%, 95%); 
             opacity: 1;
 
             .icon-button{
                 background-color: hsl(0, 0%, 95%); 
-            opacity: 1;
+                opacity: 1;
+                display: flex;
             }
         }
     }
@@ -54,6 +54,7 @@ const BottomOptions = styled.div`
     .comment-button{
         display: flex;
         align-items: center;
+        cursor: pointer;
     }
     `
 

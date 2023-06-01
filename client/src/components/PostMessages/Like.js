@@ -85,6 +85,7 @@ const Button = styled.button`
             
             background-color: hsl(0, 0%, 95%); 
             opacity: 1;
+            cursor: pointer;
 
         }
     
