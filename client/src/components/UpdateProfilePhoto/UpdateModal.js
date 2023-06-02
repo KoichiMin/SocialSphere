@@ -3,13 +3,15 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useContext } from 'react';
 import { stateContext } from '../../Context';
 import { useAuth0 } from '@auth0/auth0-react';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
-const PostModal = () =>{
+
+const UpdateModal = () =>{
     const  {isAuthenticated, user} = useAuth0()
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("");
@@ -17,18 +19,6 @@ const PostModal = () =>{
     const [image, setImage] = useState("");
     const [userNickname, setUserNickname] = useState(null)
     const {load, setLoad} =useContext(stateContext)
-    
-    useEffect(() =>{
-        if(isAuthenticated){
-            fetch(`http://localhost:4000/get-access-user/${user.email}`)
-            .then((res) => res.json())
-            .then((data)=>{
-                // console.log(data.userData[0].nickname)
-                setUserNickname(data.userData[0].nickname)
-            })
-        }
-    }, [isAuthenticated])
-    
     const handleOpen = async () => {
         setOpen(true);
         setMessage("");
@@ -40,8 +30,6 @@ const PostModal = () =>{
         })
         
     };
-
-
     const handleClose = () => {
         setOpen(false)
         setPreviewImage("")
@@ -72,17 +60,12 @@ const PostModal = () =>{
             });
             const data = await res.json();
             // console.log(userNickname);
-            await fetch("http://localhost:4000/post-message",{
-            method:"POST",
+            await fetch(`http://localhost:4000/update-profile-picture/${user.email}`,{
+            method:"PATCH",
             headers:{
                 'Content-type':'application/json',
             },
-            body: JSON.stringify({
-                data: message,
-                image: data.secure_url,
-                user: userNickname,
-                email: user.email
-            })
+            body: JSON.stringify({image: data.secure_url})
             })
             .then((res) => res.json())
             .then((data) =>{
@@ -115,11 +98,12 @@ const PostModal = () =>{
     }
     }   
 
-    
+
+
     return(
         isAuthenticated &&
         <div>
-        <Button onClick={handleOpen}>What's on your mind, {userNickname}?</Button>
+        <Button onClick={handleOpen}><CameraAltIcon/></Button>
         <Modal
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
@@ -137,12 +121,12 @@ const PostModal = () =>{
                 <Box sx={style}>
 
                 <form onSubmit={handleSubmit}>
-                    <input    
+                    {/* <input    
                     label="What's on your mind?"
                     fullWidth
                     required
                     value={message}
-                    onChange={(e) => setMessage(e.target.value)}/>
+                    onChange={(e) => setMessage(e.target.value)}/> */}
                     <input 
                         type='file' 
                         onChange={(e) =>{
@@ -159,9 +143,10 @@ const PostModal = () =>{
             </Fade>
             </Modal>
         </div>
-        
     )
 }
+
+
 
 const PrevPhoto = styled.img`
     max-width: 50%;
@@ -170,5 +155,5 @@ const PrevPhoto = styled.img`
     
     `
 
-export default PostModal
 
+export default UpdateModal

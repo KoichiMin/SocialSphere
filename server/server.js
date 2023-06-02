@@ -5,7 +5,8 @@ const cors = require('cors');
 
 const {
     postUserProfile,
-    getUserProfileInfo
+    getUserProfileInfo,
+    patchProfilePicture
 } = require('./Handlers/UserProfileHandler')
 
 const {
@@ -99,6 +100,8 @@ app.post("/post-profile-to-database" , postUserProfile)
 //  get user profile info
 app.get("/get-user-profile-info/:userEmail", getUserProfileInfo)
 
+
+app.patch("/update-profile-picture/:userEmail", patchProfilePicture)
 
 // app.post('/my-route', (req, res) => {
 //     const myData = req.body;
