@@ -58,7 +58,7 @@ const getInfoSpecificUser = async (req, res) =>{
     const database = db.db("Users");
     const UserInfoInDatabase = await database.collection("UsersInfo").find({email: user}).toArray();
     // console.log(UserInfoInDatabase)
-    res.status(400).json({status: 200, userData: UserInfoInDatabase})
+    res.status(200).json({status: 200, userData: UserInfoInDatabase})
     } catch (err) {
         res.status(404).json({ status: 404, message: err.message });
     }

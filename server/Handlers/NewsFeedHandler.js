@@ -105,7 +105,7 @@ const getLike = async (req, res) =>{
         changeEmailLikedBy.push(userEmail)
         //  update the values for numLikes, UserLikedBy and EmailLikedBy
         await database.collection("SpherePost").updateOne({_id: postId}, {$set:{numLikes:PostedMessageInfoInDatabase[0].numLikes += 1, UserLikedBy: changeUserLikedBy, EmailLikedBy: changeEmailLikedBy}})
-        res.status(400).json({status: 200, message: "liked worked", userId: userId})
+        res.status(200).json({status: 200, message: "liked worked", userId: userId})
 
     } catch(err) {
         res.status(404).json({ status: 404, message: err.message });
@@ -132,7 +132,7 @@ const getRemoveLike = async (req, res) =>{
         changeEmailLikedBy.splice(userEmail, 1)
         //  update the values for numLikes, UserLikedBy and EmailLikedBy
         await database.collection("SpherePost").updateOne({_id: postId}, {$set:{numLikes:PostedMessageInfoInDatabase[0].numLikes -= 1, UserLikedBy: changeUserLikedBy, EmailLikedBy: changeEmailLikedBy}})
-        res.status(400).json({status: 200, message: "liked removed", userId: userId})
+        res.status(200).json({status: 200, message: "liked removed", userId: userId})
 
     } catch(err) {
         res.status(404).json({ status: 404, message: err.message });
@@ -157,7 +157,7 @@ const postComment = async (req, res) =>{
         changeCommentsArray.push([userId, message])
         //  update the value for Comments
         await database.collection("SpherePost").updateOne({_id: postId}, {$set:{Comments: changeCommentsArray}})
-        res.status(400).json({status: 200, message: "comment has been posted", userId: userId})
+        res.status(200).json({status: 200, message: "comment has been posted", userId: userId})
 
     } catch(err) {
         res.status(404).json({ status: 404, message: err.message });
@@ -199,9 +199,9 @@ const getShare = async (req, res) =>{
             //  update the values for Shared
             await NewsFeedDatabase.collection("SpherePost").updateOne({_id: postId}, {$set:{ Shared: changeSharedObject}})
             await UserDatabase.collection("UsersProfile").updateOne({email: userShared}, {$set:{shared:changedSharedInUserProfile}})
-            res.status(400).json({status: 200, message: "user is now sharing the SpherePost"})
+            res.status(200).json({status: 200, message: "user is now sharing the SpherePost"})
         } else{
-            res.status(400).json({status: 200, message: "user is already sharing the SpherePost"})
+            res.status(200).json({status: 200, message: "user is already sharing the SpherePost"})
         }
     } catch (err) {
         res.status(404).json({ status: 404, message: err.message });

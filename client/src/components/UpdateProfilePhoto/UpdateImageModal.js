@@ -11,24 +11,15 @@ import { useAuth0 } from '@auth0/auth0-react';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 
-const UpdateModal = () =>{
+const UpdateImageModal = () =>{
     const  {isAuthenticated, user} = useAuth0()
     const [open, setOpen] = useState(false);
-    const [message, setMessage] = useState("");
     const [previewImage, setPreviewImage] = useState("")
     const [image, setImage] = useState("");
-    const [userNickname, setUserNickname] = useState(null)
     const {load, setLoad} =useContext(stateContext)
     const handleOpen = async () => {
         setOpen(true);
-        setMessage("");
-        await fetch(`http://localhost:4000/get-access-user/${user.email}`)
-        .then((res) => res.json())
-        .then((data)=>{
-            // console.log(data.userData[0].nickname)
-            setUserNickname(data.userData[0].nickname)
-        })
-        
+
     };
     const handleClose = () => {
         setOpen(false)
@@ -156,4 +147,5 @@ const PrevPhoto = styled.img`
     `
 
 
-export default UpdateModal
+export default UpdateImageModal
+
