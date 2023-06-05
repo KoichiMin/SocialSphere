@@ -1,7 +1,7 @@
-import FacebookIcon from '@mui/icons-material/Facebook';
-import HomeIcon from '@mui/icons-material/Home';
-import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
-import Diversity3Icon from '@mui/icons-material/Diversity3';
+// import FacebookIcon from '@mui/icons-material/Facebook';
+// import HomeIcon from '@mui/icons-material/Home';
+// import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
+// import Diversity3Icon from '@mui/icons-material/Diversity3';
 import AppsIcon from '@mui/icons-material/Apps';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import NotificationsIcon from '@mui/icons-material/Notifications';

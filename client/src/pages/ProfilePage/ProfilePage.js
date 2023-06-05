@@ -2,15 +2,16 @@ import { useAuth0 } from "@auth0/auth0-react"
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import SingleMessage from "../../components/PostMessages/SingleMessage";
-import UpdateModal from "../../components/UpdateProfilePhoto/UpdateModal";
+import UpdateImageModal from "../../components/UpdateProfilePhoto/UpdateImageModal";
 import { useContext } from 'react';
 import { stateContext } from '../../Context';
+import UpdateUserNameModal from "../../components/UpdateProfilePhoto/UpdateUserNameModal";
 
 const ProfilePage = () =>{
     const {user} = useAuth0();
     const [userProfile, setUserProfile] = useState(null)
     const [sharedPost, setSharedPost] =useState(null)
-    const {load, setLoad} =useContext(stateContext)
+    const {load} =useContext(stateContext)
     useEffect(()=>{
         if(user){
             fetch(`http://localhost:4000/get-user-profile-info/${user.email}`)
@@ -32,11 +33,12 @@ const ProfilePage = () =>{
                 <div>
                     <ProfileImage src={userProfile.ProfilePicture} alt="Profile"/>   
                     {/* <button>Update Profile Image</button> */}
-                    <UpdateModal/>
+                    <UpdateImageModal/>
                 </div>
                 <div>
                     {userProfile.nickname} 
-                    <button>Update Name</button>
+                    <UpdateUserNameModal/>
+
                 </div>
             </Profile>
             {sharedPost.map((sharedPost) =>{
