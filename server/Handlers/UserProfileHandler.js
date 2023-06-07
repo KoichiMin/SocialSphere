@@ -71,49 +71,54 @@ const patchProfilePicture = async (req, res) =>{
 const patchUsername = async (req, res) =>{
     const { email, oldNickname} = req.params;
     const {newNickname} = req.body
-    // console.log(userEmail)
+    console.log(email, oldNickname, newNickname)
     try {
     const db = await connectToDatabase();
     const database = db.db("Users");
-    const collection = db.db("NewsFeed").collection("SpherePost");
-    const AllSpherePostInDatabase = await collection.find().toArray();
-    // console.log(AllSpherePostInDatabase)
+    // const collection = db.db("NewsFeed").collection("SpherePost");
+    await database.collection("UsersInfo").updateOne({email: email}, {$set:{nickname: newNickname}})
+    await database.collection("UsersProfile").updateOne({email: email}, {$set:{nickname: newNickname}})
+    const AllSpherePostInDatabase = await db.db("NewsFeed").collection("SpherePost").find().toArray();
+
     for( let spherePost of AllSpherePostInDatabase){
+        console.log(spherePost.email, spherePost._id)
         //  if SpherePost was created by the user changing the nickname
         if(spherePost.nickname === oldNickname){
             console.log("it went inside spherePost nickname", spherePost.nickname)
-            // spherePost.nickname = newNickname
-            await collection.updateOne({email:spherePost.email}, {$set: {nickname: newNickname}})
-            console.log(spherePost.nickname)
-        }
-        //  if user that wants to change their nickname liked the SpherePost
-        if(spherePost.numLikes > 0){
-            for( let i = 0; i < spherePost.UsersLikedBy.length; i++){
-                console.log("it went inside UsersLikedBy")
-                // user can only Like a post once therefore you can update inside the if statement
-                if(spherePost.UsersLikedBy[i]  === oldNickname){
-                    spherePost.UsersLikedBy[i] = newNickname;
-                    await collection.updateOne({email:spherePost.email}, {$set: {UsersLikedBy: spherePost.UsersLikedBy}})
-                }
-            }
+            spherePost.nickname = newNickname
+            await db.db("NewsFeed").collection("SpherePost").updateOne({_id:spherePost._id}, {$set: {nickname: newNickname}})
+            
         }
 
-        // if user commented on a SpherePost
-        if(spherePost.Comments.length > 0){
-            // user can potentially comment multiple times inside a comment section so update after the for loop is finished iterating
-            for(let i = 0; i < spherePost.Comments.length; i++){
-                console.log("it went inside spherePost Comments")
-                if(spherePost.Comments[i][0] === oldNickname){
-                    spherePost.Comments[i][0] = newNickname;
+        //  if user that wants to change their nickname liked the SpherePost
+        if(spherePost.UserLikedBy.length > 0){
+            for( let i = 0; i < spherePost.UserLikedBy.length; i++){
+                // user can only Like a post once therefore you can update inside the if statement
+                if(spherePost.UserLikedBy[i]  === oldNickname){
+                    console.log("it went inside UserLikedBy", spherePost.UserLikedBy[i], oldNickname, newNickname)
+                    spherePost.UserLikedBy.splice(oldNickname, 1)
+                    spherePost.UserLikedBy.push(newNickname)
+                    // spherePost.UserLikedBy[i] = newNickname;
+                    console.log(spherePost.UserLikedBy)
+                    await db.db("NewsFeed").collection("SpherePost").updateOne({_id:spherePost._id}, {$set: {UserLikedBy:spherePost.UserLikedBy}})
                 }
             }
-            await collection.updateOne({email:spherePost.email}, {$set: {Comments: spherePost.Comments}})
+        }
+        // if user commented on a SpherePost
+        if(spherePost.Comments.length > 0){
+            console.log(spherePost.Comments.length)
+            // user can potentially comment multiple times inside a comment section so update after the for loop is finished iterating
+            for(let i = 0; i < spherePost.Comments.length; i++){
+                if(spherePost.Comments[i][0] == oldNickname){
+                    spherePost.Comments[i][0] = newNickname;
+                    console.log("it went inside spherePost Comments", spherePost.Comments[i][0], oldNickname, spherePost.data)
+                    await db.db("NewsFeed").collection("SpherePost").updateOne({_id:spherePost._id}, {$set: {Comments: spherePost.Comments}})
+                }
+            }
         }
     }
 
-    console.log(UserSpherePostInDatabase)
-    await database.collection("UsersProfile").updateOne({email: email}, {$set:{nickname: newNickname}})
-    await database.collection("UsersProfile").updateOne({email: email}, {$set:{nickname: newNickname}})
+
     
     res.status(200).json({status: 200, message:"update is complete"})
     } catch (err) {
