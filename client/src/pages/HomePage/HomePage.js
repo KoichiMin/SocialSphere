@@ -1,7 +1,7 @@
 // import { useContext, useEffect, useState } from "react"
 import PostModal from "../../components/PostModal/PostModal"
 import styled from "styled-components"
-import PostMessages from "../../components/PostMessages/PostMessages"
+import PostMessages from "../../components/SpherePosts/PostMessages"
 import { useAuth0 } from "@auth0/auth0-react"
 import { useEffect } from "react"
 import image from "/Users/a/Desktop/mini project/SocialSphere/client/src/image/R.png"
