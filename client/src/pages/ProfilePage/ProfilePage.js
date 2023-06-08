@@ -14,12 +14,26 @@ const ProfilePage = () =>{
     const {load} =useContext(stateContext)
     useEffect(()=>{
         if(user){
+            //  getting access to the user Profile info
             fetch(`http://localhost:4000/get-user-profile-info/${user.email}`)
             .then((res) => res.json())
             .then((data) =>{
                 setUserProfile(data.userData[0])
-                // console.log(data.userData[0])
-                setSharedPost(data.userData[0].shared.reverse())
+
+                // updating the shared Post
+                fetch(`http://localhost:4000/update-shared-post`,{
+                method:"PATCH",
+                headers:{
+                    'Content-type':'application/json',
+                },
+                body: JSON.stringify({shared:data.userData[0].shared})
+                })
+                .then((res) => res.json())
+                .then((data) =>{
+                    
+                    setSharedPost(data.displaySharedPost.reverse())
+                    // console.log(data.displaySharedPost.reverse())
+                });
             })
 
         }
@@ -32,7 +46,6 @@ const ProfilePage = () =>{
             <Profile>
                 <div>
                     <ProfileImage src={userProfile.ProfilePicture} alt="Profile"/>   
-                    {/* <button>Update Profile Image</button> */}
                     <UpdateImageModal/>
                 </div>
                 <div>
@@ -41,9 +54,9 @@ const ProfilePage = () =>{
 
                 </div>
             </Profile>
-            {sharedPost.map((sharedPost) =>{
+            {sharedPost && sharedPost.map((singleSharedPost) =>{
                 return(
-                    <SingleMessage post={sharedPost} />
+                    <SingleMessage post={singleSharedPost} />
                 )
             })}
         </>

@@ -7,7 +7,8 @@ const {
     postUserProfile,
     getUserProfileInfo,
     patchProfilePicture,
-    patchUsername
+    patchUsername,
+    patchSharedPosts
 } = require('./Handlers/UserProfileHandler')
 
 const {
@@ -107,6 +108,8 @@ app.patch("/update-profile-picture/:userEmail", patchProfilePicture)
 //  update user nickname 
 app.patch("/update-user-nickname/:email/:oldNickname", patchUsername)
 
+// update posts 
+app.patch("/update-shared-post", patchSharedPosts)
 
 // app.post('/my-route', (req, res) => {
 //     const myData = req.body;
