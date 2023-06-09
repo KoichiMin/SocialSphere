@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react"
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import SingleMessage from "../../components/PostMessages/SingleMessage";
+import SingleMessage from "../../components/SpherePosts/SingleMessage";
 import UpdateImageModal from "../../components/UpdateProfilePhoto/UpdateImageModal";
 import { useContext } from 'react';
 import { stateContext } from '../../Context';

@@ -1,7 +1,7 @@
 // import { useContext, useEffect, useState } from "react"
 import PostModal from "../../components/PostModal/PostModal"
 import styled from "styled-components"
-import PostMessages from "../../components/PostMessages/PostMessages"
+import PostMessages from "../../components/SpherePosts/PostMessages"
 import { useAuth0 } from "@auth0/auth0-react"
 import { useEffect } from "react"
 import image from "/Users/a/Desktop/mini project/SocialSphere/client/src/image/R.png"
@@ -50,17 +50,6 @@ const HomePage = () => {
     }, [user, isAuthenticated])
     return(
         <Content>
-            {/* <SideBar>
-                <ul>
-                    <li className="li">Find friends</li>
-                    <li className="li">Most Recent</li>
-                    <li className="li">Groups</li>
-                    <li className="li">MarketPlace</li>
-                    <li className="li">Watch</li>
-                    <li className="li">Memories</li>
-                    <li className="li">Saved</li>
-                </ul>
-            </SideBar> */}
             <NewsFeed>
                 <PostModal/>
                 <PostMessages/>

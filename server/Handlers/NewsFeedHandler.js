@@ -30,6 +30,7 @@ const postMessage = async (req, res) => {
             UserLikedBy: [],
             EmailLikedBy: [],
             Comments:[],
+            EmailComments: [],
             Shared: []
         });
         res.status(200).json({ status: "success", message: "post has been added to NewsFeed" });
@@ -155,8 +156,9 @@ const postComment = async (req, res) =>{
         let changeCommentsArray = PostedMessageInfoInDatabase[0].Comments 
         userId = UserInfoInDatabase[0].nickname
         changeCommentsArray.push([userId, message])
-        //  update the value for Comments
-        await database.collection("SpherePost").updateOne({_id: postId}, {$set:{Comments: changeCommentsArray}})
+        let addEmailComment = PostedMessageInfoInDatabase[0].EmailComments
+        addEmailComment.push(userCommented)
+        await database.collection("SpherePost").updateOne({_id: postId}, {$set:{Comments: changeCommentsArray, EmailComments: addEmailComment}})
         res.status(200).json({status: 200, message: "comment has been posted", userId: userId})
 
     } catch(err) {

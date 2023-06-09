@@ -1,9 +1,11 @@
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { useAuth0 } from '@auth0/auth0-react';
 import styled from 'styled-components';
-
+import { stateContext } from "../../Context"
+import  { useContext } from "react"
 const Share = ({postId}) =>{
     const  { user, isAuthenticated} = useAuth0()
+    const {load, setLoad} =useContext(stateContext);
     // const [shared, setShared] = useState(false)
 
     const handleShare = () => {
@@ -11,6 +13,7 @@ const Share = ({postId}) =>{
         fetch(`http://localhost:4000/share-post/${user.email}/${postId}`)
         .then((res) => res.json())
         .then((data) =>{
+            setLoad((prevLoad) => !prevLoad)
             console.log(data.message)
         })
 

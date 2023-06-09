@@ -1,4 +1,5 @@
-import  { useEffect, useState } from "react"
+import  { useEffect, useState, useContext } from "react"
+import { stateContext } from "../../Context"
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt'; 
 import styled from "styled-components";
@@ -8,7 +9,7 @@ const Like = ({postId}) =>{
     const [changeLike, setChangeLike] = useState(false)
     const  { user, isAuthenticated} = useAuth0()
     const [isModalOpen, setisModalOpen] = useState(false)
-
+    const {load, setLoad} =useContext(stateContext);
     useEffect(() => {
         if (isAuthenticated) {
             fetch(`http://localhost:4000/get-status/${user.email}/${postId}`)
@@ -28,6 +29,7 @@ const Like = ({postId}) =>{
         .then((res) => res.json())
         .then((data) =>{
             console.log(data.message)
+            setLoad((prevLoad) => !prevLoad)
         })
 
     }
@@ -38,6 +40,7 @@ const Like = ({postId}) =>{
         .then((res) => res.json())
         .then((data) =>{
             console.log(data.message)
+            setLoad((prevLoad) => !prevLoad)
         })
     
     }

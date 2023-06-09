@@ -1,18 +1,19 @@
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import SingleMessage from './SingleMessage';
 import { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import CommentMessages from './CommentMessages';
 import styled from 'styled-components';
+import { stateContext } from "../../Context"
 
 
 // content inside the comment modal
 const ContentComment = ({postId, setOpen}) =>{
     const [message, setMessage] = useState("");
     const [postContent, setPostContent] = useState(null)
+    const {load, setLoad} =useContext(stateContext);
     const {user} = useAuth0()
-
     //  submit comment written by the user
     const handleSubmit = (e) =>{
         // console.log(user)
@@ -29,6 +30,7 @@ const ContentComment = ({postId, setOpen}) =>{
         .then((res) => res.json())
         .then((data) =>{
             // console.log(data)
+            setLoad((prevLoad) => !prevLoad)
             localStorage.setItem('modalOpen', false);
             setOpen(false)
         })
