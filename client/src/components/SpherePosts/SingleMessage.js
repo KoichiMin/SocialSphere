@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import LikeCommentShare from "./LikeCommentShare";
 import { useEffect, useState } from "react";
+import ModalUsersLikeCommentShare from "../ModalUsersLikeCommentShare/ModalUsersLikeCommentShare";
 
 const SingleMessage = ({post}) =>{
     const [updatePost, setUpdatePost] = useState(post)
@@ -18,14 +19,8 @@ const SingleMessage = ({post}) =>{
             {updatePost.image !== "no image available" &&
                 <Picture src={updatePost.image} alt="posted message"/>
             }
-            
-            <Numbers>
-                <div>{updatePost.numLikes} likes</div>
-                <div className="comment-share">
-                <div>{updatePost.Comments.length} comments</div>
-                <div>{updatePost.Shared.length} shares</div>
-                </div>
-            </Numbers>
+            <ModalUsersLikeCommentShare updatePost={updatePost}/>
+
             <Underline></Underline>
             <LikeCommentShare postId={updatePost._id}/>
         </ContentBox>

@@ -14,7 +14,6 @@ const ContentComment = ({postId, setOpen}) =>{
     const [postContent, setPostContent] = useState(null)
     const {load, setLoad} =useContext(stateContext);
     const {user} = useAuth0()
-
     //  submit comment written by the user
     const handleSubmit = (e) =>{
         // console.log(user)

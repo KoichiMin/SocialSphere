@@ -50,17 +50,6 @@ const HomePage = () => {
     }, [user, isAuthenticated])
     return(
         <Content>
-            {/* <SideBar>
-                <ul>
-                    <li className="li">Find friends</li>
-                    <li className="li">Most Recent</li>
-                    <li className="li">Groups</li>
-                    <li className="li">MarketPlace</li>
-                    <li className="li">Watch</li>
-                    <li className="li">Memories</li>
-                    <li className="li">Saved</li>
-                </ul>
-            </SideBar> */}
             <NewsFeed>
                 <PostModal/>
                 <PostMessages/>
