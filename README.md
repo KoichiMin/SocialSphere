@@ -9,7 +9,7 @@ SocialSphere is a MERN stack application that closely replicates the functionali
 
 3.     Profiles and Timelines: Users have their own profiles where they can share information about themselves, update statuses, upload photos, and interact with posts from others.
 
-4.     Posts and Sharing: Users can create and publish text-based posts, photos, videos, and other types of content. They can also like, comment on, and share posts from others.
+4.     Posts and Sharing: Users can create and publish text-based posts, photos, and other types of content. They can also like, comment on, and share posts from others.
 
 5.     Likes and Comments: Users can express their reactions to posts using likes, or comments, allowing for a range of emotional responses.
 
