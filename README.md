@@ -16,5 +16,13 @@ SocialSphere is a MERN stack application that closely replicates the functionali
 
 # API's
 Cloudinary: Cloud-based media management platform for developers to upload, transform, optimize, and deliver images and videos in applications.
+
 Auth0: Identity and authentication platform API that allows developers to easily add secure user authentication and authorization features to their applications, ensuring seamless user experiences.
 
+# Frameworks and Dependencies
+React,
+NodeJS,
+Express,
+MaterialUI,
+React-Router-Dom,
+Styled-Components
